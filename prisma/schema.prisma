@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Proposal {
+  id                  String   @id @default(cuid())
+  pipefyCardId        String?
+  courseName          String
+  coordinator         String
+  area                String
+  subarea             String
+  vertical            String
+  targetAudience      String?
+  requestDate         DateTime @default(now())
+  currentPhase        String
+  status              String
+  observations        String?
+  preCommitteeOpinion String?
+  finalOpinion        String?
+  finalDecision       String?
+  pptUrl              String?
+  videoUrl            String?
+  sharepointUrl       String?
+  maxSimilarity       Float?
+  cannibalizationRisk String?
+  priority            String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  similarCourses      SimilarCourse[]
+  comments            Comment[]
+  votes               Vote[]
+  histories           ProposalHistory[]
+}
+
+model SimilarCourse {
+  id                String   @id @default(cuid())
+  proposalId        String
+  courseName        String
+  similarityPercent Float
+  coordinator       String
+  situation         String
+  comment           String?
+  g2Id              String?
+  version           String?
+  area              String?
+  workload          Int?
+  relationType      String?
+
+  proposal          Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id          String   @id @default(cuid())
+  proposalId  String
+  userId      String
+  authorName  String
+  authorRole  String
+  text        String
+  createdAt   DateTime @default(now())
+
+  proposal    Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model Vote {
+  id           String   @id @default(cuid())
+  proposalId   String
+  userId       String
+  directorName String
+  vote         String
+  comment      String?
+  createdAt    DateTime @default(now())
+
+  proposal     Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model ProposalHistory {
+  id            String   @id @default(cuid())
+  proposalId    String
+  action        String
+  previousValue String?
+  newValue      String?
+  userId        String
+  userName      String
+  createdAt     DateTime @default(now())
+
+  proposal      Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id    String @id @default(cuid())
+  name  String
+  email String @unique
+  role  String
+
+  comments Comment[]
+  votes    Vote[]
+  histories ProposalHistory[]
+}
