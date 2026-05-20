@@ -1,9 +1,0 @@
-﻿components/ProposalCard.tsx(40,81): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
-  Property 'title' does not exist on type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
-components/ProposalCard.tsx(41,74): error TS2322: Type '{ className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
-  Property 'title' does not exist on type 'IntrinsicAttributes & Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>'.
-components/RoleSwitcher.tsx(12,28): error TS2322: Type '(val: "Diretor" | "Admin") => void' is not assignable to type '(value: "Diretor" | "Admin" | null, eventDetails: SelectRootChangeEventDetails) => void'.
-  Types of parameters 'val' and 'value' are incompatible.
-    Type '"Diretor" | "Admin" | null' is not assignable to type '"Diretor" | "Admin"'.
-      Type 'null' is not assignable to type '"Diretor" | "Admin"'.
-components/Sidebar.tsx(5,27): error TS2305: Module '"lucide-react"' has no exported member 'Trello'.
